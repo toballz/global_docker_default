@@ -1,0 +1,49 @@
+services:
+  global_mysql:
+    image: mysql:8.0
+    container_name: mysql-8.0-container
+    expose:
+      - "3306"
+    env_file:
+      - _env/${STAGE}/mysql.env
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: unless-stopped
+    networks:
+      - shared-global-network
+
+  global_phpmyadmin:
+    image: phpmyadmin:apache
+    container_name: pma-global
+    expose:
+      - "80"
+    depends_on:
+      - global_mysql
+    environment:
+      PMA_HOST: global_mysql
+    env_file:
+      - _env/${STAGE}/mysql.env
+    networks:
+      - shared-global-network
+
+  global_nginx_proxy:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: nginx-proxy_global
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "81:81"
+      - "443:443"
+    volumes:
+      - ./npm/data:/data
+      - ./npm/letsencrypt:/etc/letsencrypt
+    networks:
+      - shared-global-network
+
+
+volumes:
+  mysql_data:
+
+networks:
+  shared-global-network:
+    external: true
