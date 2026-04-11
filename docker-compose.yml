@@ -1,7 +1,7 @@
 services:
   global_mysql:
     image: mysql:8.0
-    container_name: mysql-8.0-container
+    container_name: global_mysql
     expose:
       - "3306"
     env_file:
@@ -12,9 +12,9 @@ services:
     networks:
       - shared-global-network
 
-  global_phpmyadmin:
+  global_pma:
     image: phpmyadmin:apache
-    container_name: pma-global
+    container_name: global_pma
     expose:
       - "80"
     depends_on:
@@ -40,10 +40,32 @@ services:
     networks:
       - shared-global-network
 
+  global_minio:
+    image: minio/minio
+    container_name: global_minio
+    command: server /data --console-address ":9001"
+    restart: unless-stopped
+    env_file:
+      - _env/${STAGE}/minio.env
+    volumes:
+      - miniodata:/data
+    networks:
+      - shared-global-network
+    ports:
+      - "9000:9000"
+    expose:
+      - "9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   mysql_data:
+  miniodata:
 
 networks:
   shared-global-network:
     external: true
+    

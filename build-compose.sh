@@ -1,0 +1,1 @@
+STAGE=dev docker compose -p global_apps up  -d --build
