@@ -1,2 +1,2 @@
-wsl ./build-compose.sh
+wsl ./build-compose.sh dev
 pause
