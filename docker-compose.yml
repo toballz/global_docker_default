@@ -28,7 +28,7 @@ services:
 
   global_nginx_proxy:
     image: jc21/nginx-proxy-manager:latest
-    container_name: nginx-proxy_global
+    container_name: global_nginx_proxy
     restart: unless-stopped
     ports:
       - "80:80"
