@@ -51,10 +51,9 @@ services:
       - miniodata:/data
     networks:
       - shared-global-network
-    ports:
-      - "9000:9000"
     expose:
       - "9001"
+      - "9000"
 
 volumes:
   mysql_data:

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-STAGE=${1:-dev}
+STAGE=${1:?STAGE is required}
 
 if [ "$STAGE" = "dev" ]; then
   STAGE=$STAGE docker compose -p global_apps -f docker-compose.yml -f docker-compose-override.yml up -d --build
