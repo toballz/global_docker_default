@@ -35,8 +35,8 @@ services:
       - "81:81"
       - "443:443"
     volumes:
-      - ./npm/data:/data
-      - ./npm/letsencrypt:/etc/letsencrypt
+      - nginx_pm_data:/data
+      - nginx_pm_letsencrypt:/etc/letsencrypt
     networks:
       - shared-global-network
 
@@ -56,8 +56,12 @@ services:
       - "9000"
 
 volumes:
-  mysql_data:
+  mysql_data :
+    external: true
+    name: global_apps_mysql_data
   miniodata:
+  nginx_pm_data:
+  nginx_pm_letsencrypt:
 
 networks:
   shared-global-network:
