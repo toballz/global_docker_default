@@ -6,6 +6,9 @@ services:
       - "3306"
     env_file:
       - _env/${STAGE}/mysql.env
+    environment:
+      TZ: America/New_York
+    command: --default-time-zone=America/New_York
     volumes:
       - mysql_data:/var/lib/mysql
     restart: unless-stopped
