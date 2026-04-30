@@ -1,7 +1,4 @@
 services:
-  global_pma:
-    ports:
-      - "2100:80"
   global_mysql:
     ports:
       - "3306:3306"

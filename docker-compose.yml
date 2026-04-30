@@ -15,20 +15,6 @@ services:
     networks:
       - shared-global-network
 
-  global_pma:
-    image: phpmyadmin:apache
-    container_name: global_pma
-    expose:
-      - "80"
-    depends_on:
-      - global_mysql
-    environment:
-      PMA_HOST: global_mysql
-    env_file:
-      - _env/${STAGE}/mysql.env
-    networks:
-      - shared-global-network
-
   global_nginx_proxy:
     image: jc21/nginx-proxy-manager:latest
     container_name: global_nginx_proxy
