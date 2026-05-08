@@ -26,7 +26,19 @@ services:
       - shared-global-network
 
 
-
+  global_dockergui:
+    image: portainer/portainer-ce:latest
+    container_name: global_dockergui
+    volumes:
+      -  /var/run/docker.sock:/var/run/docker.sock 
+      - ./global_dockergui_volume/data:/data 
+    expose:
+      - 9000
+      - 9443
+    ports:
+      - "9443:9443"
+    networks:
+      - shared-global-network
 
   global_nginx_proxy:
     image: jc21/nginx-proxy-manager:latest
