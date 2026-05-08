@@ -15,6 +15,19 @@ services:
     networks:
       - shared-global-network
 
+  global_pma:
+    image: phpmyadmin/phpmyadmin
+    container_name: global_pma
+    expose:
+      - "80"
+    env_file:
+      - _env/${STAGE}/pma.env
+    networks:
+      - shared-global-network
+
+
+
+
   global_nginx_proxy:
     image: jc21/nginx-proxy-manager:latest
     container_name: global_nginx_proxy
